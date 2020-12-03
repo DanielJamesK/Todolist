@@ -1,6 +1,8 @@
 const form = document.getElementById('form')
 const input = document.getElementById('input')
 const todosUL = document.getElementById('todos')
+const todosContainer = document.querySelector('.container')
+const draggables = document.querySelectorAll('.draggable')
 
 form.addEventListener('submit', (e) => {
   e.preventDefault()
@@ -16,6 +18,8 @@ function addTodo(todo) {
 
   if (todoText) {
     const todoEl = document.createElement('li')
+    todoEl.className = 'draggable'
+    todoEl.setAttribute('draggable', true)
     if (todo && todo.completed) {
       todoEl.classList.add('completed')
     }
@@ -37,3 +41,25 @@ function addTodo(todo) {
     input.value = ''
   }
 }
+
+
+todosUL.addEventListener('dragstart', function (e) {
+  if (e.target && e.target.matches('li.draggable')) {
+    e.target.classList.add('dragging')
+    console.log('drag start')
+  }
+})
+
+todosUL.addEventListener('dragend', function (e) {
+  if (e.target && e.target.matches('li.draggable')) {
+    e.target.classList.remove('dragging')
+    console.log('drag end')
+  }
+})
+
+draggables.forEach(draggable => {
+  draggable.addEventListener('dragstart', () => {
+    console.log('drag start')
+    // draggable.classList.add('dragging')
+  })
+})
