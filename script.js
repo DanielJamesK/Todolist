@@ -1,7 +1,7 @@
 const form = document.getElementById('form')
 const input = document.getElementById('input')
 const todosUL = document.getElementById('todos')
-const todosContainer = document.querySelector('.container')
+const todosContainer = document.querySelectorAll('.container')
 const draggables = document.querySelectorAll('.draggable')
 
 form.addEventListener('submit', (e) => {
@@ -57,9 +57,29 @@ todosUL.addEventListener('dragend', function (e) {
   }
 })
 
-draggables.forEach(draggable => {
-  draggable.addEventListener('dragstart', () => {
-    console.log('drag start')
-    // draggable.classList.add('dragging')
+todosContainer.forEach(container => {
+  container.addEventListener('dragover', e => {
+    e.preventDefault()
+    const afterElement = getDragAfterElement(container, e.clientY)
+    const draggable = document.querySelector('.dragging')
+    if (afterElement == null) {
+      container.appendChild(draggable)
+    } else {
+      container.insertBefore(draggable, afterElement)
+    }
   })
 })
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging')]
+
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect()
+    const offset = y - box.top - box.height / 2
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: child }
+    } else {
+      return closest
+    }
+  }, { offset: Number.NEGATIVE_INFINITY }).element
+}
