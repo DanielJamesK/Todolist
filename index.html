@@ -6,11 +6,19 @@
   <!-- Font Awesome CDN -->
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css.css"> -->
   <link rel="stylesheet" href="style.css">
-  <title>My Project</title>
+  <title>Todo List</title>
 </head>
 <body>
-  <h1>Project Starter</h1>
+  <h1>TODOS</h1>
+  <form id="form">
+    <input type="text" class="input" id="input" placeholder="Enter your todo" autocomplete="off">
 
+    <ul class="todos" id="todos">
+      <li>My First Todo</li>
+      <li class="completed">MySecond Todo</li>
+    </ul>
+  </form>
+  <small>Left click to toggle completed. <br> Right click to delete todo. <br>Drag and drop to reorder todos</small>
   <script src="script.js"></script>
 </body>
 </html>
